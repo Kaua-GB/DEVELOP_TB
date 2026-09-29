@@ -18,15 +18,16 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
- Validar:
-  runs-on: ubuntu-latest
-  steps:
-   - name: teste 
-     uses: actions/checkout@v4
-   - name: Visualizar os arquivos
-     run: ls -l
- 
- deploy:
+
+  Validar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fazer o git clone
+        uses: actions/checkout@v4
+      - name: Visualizar arquivos
+        run: ls -l
+  
+  deploy:
     needs: Validar
     environment:
       name: github-pages
@@ -40,8 +41,17 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          
+          # Upload entire repository
           path: '.'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
+
+  Docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Docker Login
+        uses: docker/login-action@v4.6.0
+        with:
+          username: ${{secrets.DOCKER_USER}}
+          password: ${{secrets.DOCKER_SENHA}}
