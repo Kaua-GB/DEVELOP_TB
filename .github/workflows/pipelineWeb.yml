@@ -19,13 +19,14 @@ concurrency:
 
 jobs:
  Validar:
- runs-on: ubuntu-latest
-steps: defaults:
-  - name:  actions/checkout@v4
-  - name: Visualizar os arquivos
-    run: ls -l
+  runs-on: ubuntu-latest
+  steps:
+   - name: teste 
+     uses: actions/checkout@v4
+   - name: Visualizar os arquivos
+     run: ls -l
  
-  deploy:
+ deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
